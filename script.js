@@ -19,4 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Check for sections in the viewport on scroll
   window.addEventListener("scroll", addAnimationClass);
 });
-s
+document.addEventListener("DOMContentLoaded", function () {
+  const mobileNav = document.querySelector(".mobile-nav");
+  const mobileNavToggle = document.getElementById("mobile-nav-toggle");
+
+  mobileNavToggle.addEventListener("click", function () {
+    mobileNav.classList.toggle("active");
+  });
+});

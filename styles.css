@@ -79,3 +79,74 @@ nav a {
   opacity: 1;
   transform: translateY(0);
 }
+/* styles.css */
+
+/* ... (previous styles) */
+
+/* Mobile Navigation Styles */
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav ul {
+  list-style: none;
+  text-align: center;
+}
+
+.mobile-nav ul li {
+  margin: 10px 0;
+}
+
+.mobile-nav ul li a {
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Show the menu when the toggle button is clicked */
+.mobile-nav.active {
+  display: block;
+  background-color: #333;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.mobile-nav.active ul {
+  padding: 20px;
+  background-color: #333;
+}
+
+.mobile-nav.active li {
+  margin: 10px 0;
+}
+
+.mobile-nav.active li a {
+  color: #fff;
+}
+
+/* Styles for the toggle button */
+.menu-icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Media query to show/hide mobile navigation */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  nav.active ul {
+    display: block;
+  }
+}
