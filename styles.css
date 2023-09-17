@@ -1,83 +1,81 @@
-/* Add your additional CSS styles here */
-body {
-  font-family: Arial, sans-serif;
+/* styles.css */
+
+/* Reset some default styles */
+body, h1, h2, h3, p, ul, li, a {
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
+  list-style: none;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+}
+
+/* Global styles */
+body {
+  background-color: #f0f0f0;
+  color: #333;
 }
 
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   background-color: #333;
   color: #fff;
-  padding: 20px;
   text-align: center;
-  z-index: 999; /* Ensure the navigation bar appears above other elements */
-}
-header h1 {
-  margin: 0;
-  font-size: 24px;
+  padding: 20px 0;
 }
 
 nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
-nav ul li {
-  display: inline;
-  margin-left: 10px;
+nav li {
+  margin: 0 20px;
 }
 
-nav ul li a {
+nav a {
   color: #fff;
-  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
 }
 
-section {
-  top: 20px;
-  padding: 40px;
+.section {
+  padding: 20px;
 }
 
 .section h2 {
-  margin-bottom: 20px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .section-content {
-  line-height: 1.6;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.references {
-  list-style-type: none;
-  padding-left: 0;
+/* Add more specific styles as needed */
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  header {
+    padding: 10px 0;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav li {
+    margin: 10px 0;
+  }
 }
-
-
-.hobbies ul {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.hobbies li {
-  flex-basis: 50%;
-  padding: 5px;
-}
-
-/* Add your cool animations here */
 .section {
   opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.section.animated {
+.section.animate {
   opacity: 1;
   transform: translateY(0);
-}
-#about {
-  padding-top: 80px; /* Adjust the padding value as needed */
 }

@@ -1,31 +1,22 @@
-// Function to check if an element is in viewport
-function isInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 10 &&
-    rect.left >= 10 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
+// script.js
 
-// Function to add animation class to sections in viewport
-function animateSections() {
-  const sections = document.querySelectorAll('.section');
-  sections.forEach((section) => {
-    if (isInViewport(section)) {
-      section.classList.add('animated');
-    }
-  });
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const sections = document.querySelectorAll(".section");
 
-// Event listeners for scroll and resize events
-window.addEventListener('scroll', () => {
-  requestAnimationFrame(animateSections);
+  // Function to add a class for fade-in animation
+  function addAnimationClass() {
+    sections.forEach((section) => {
+      const sectionTop = section.getBoundingClientRect().top;
+      if (sectionTop < window.innerHeight - 300) {
+        section.classList.add("animate");
+      }
+    });
+  }
+
+  // Initial check for sections in the viewport
+  addAnimationClass();
+
+  // Check for sections in the viewport on scroll
+  window.addEventListener("scroll", addAnimationClass);
 });
-window.addEventListener('resize', () => {
-  requestAnimationFrame(animateSections);
-});
-
-// Initial animation check on page load
-requestAnimationFrame(animateSections);
+s
