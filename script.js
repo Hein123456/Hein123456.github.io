@@ -7,7 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function addAnimationClass() {
     sections.forEach((section) => {
       const sectionTop = section.getBoundingClientRect().top;
-      if (sectionTop < window.innerHeight - 300) {
+      const sectionHeight = section.offsetHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      const threshold = window.innerHeight - 300; // Adjust this value if necessary
+
+      if (sectionTop < threshold || (window.scrollY + window.innerHeight >= pageHeight - sectionHeight / 2)) {
         section.classList.add("animate");
       }
     });
@@ -16,14 +20,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial check for sections in the viewport
   addAnimationClass();
 
-  // Check for sections in the viewport on scroll
+  // Check for sections in the viewport on scroll, and when the page is fully loaded
   window.addEventListener("scroll", addAnimationClass);
-});
-document.addEventListener("DOMContentLoaded", function () {
-  const mobileNav = document.querySelector(".mobile-nav");
-  const mobileNavToggle = document.getElementById("mobile-nav-toggle");
+  window.addEventListener("load", addAnimationClass); // Ensures check is performed when everything is loaded
 
-  mobileNavToggle.addEventListener("click", function () {
-    mobileNav.classList.toggle("active");
-  });
+  // Mobile navigation toggle, assuming this is still needed
+  const mobileNavToggle = document.getElementById("mobile-nav-toggle");
+  if (mobileNavToggle) {
+    const mobileNav = document.querySelector(".mobile-nav");
+    mobileNavToggle.addEventListener("click", function () {
+      mobileNav.classList.toggle("active");
+    });
+  }
 });

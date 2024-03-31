@@ -7,7 +7,13 @@ body, h1, h2, h3, p, ul, li, a {
   list-style: none;
   text-decoration: none;
   font-family: Arial, sans-serif;
+  font-size: clamp(14px, 1.5vw, 18px); /* Adjust the base font size */
 }
+
+/* For heading elements, adjust the clamp values accordingly to ensure they scale up more significantly */
+h1 { font-size: clamp(24px, 5vw, 32px); }
+h2 { font-size: clamp(20px, 4vw, 28px); }
+h3 { font-size: clamp(18px, 3.5vw, 24px); }
 
 /* Global styles */
 body {
@@ -34,16 +40,20 @@ nav li {
 nav a {
   color: #fff;
   font-weight: bold;
-  font-size: 18px;
 }
 
 .section {
   padding: 20px;
 }
 
-.section h2 {
+.section h2, #intro {
   color: #333;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+#hr1 {
+  width: 50%;
 }
 
 .section-content {
@@ -53,22 +63,6 @@ nav a {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Add more specific styles as needed */
-
-/* Media queries for responsive design */
-@media (max-width: 768px) {
-  header {
-    padding: 10px 0;
-  }
-
-  nav ul {
-    flex-direction: column;
-  }
-
-  nav li {
-    margin: 10px 0;
-  }
-}
 .section {
   opacity: 0;
   transform: translateY(20px);
@@ -79,74 +73,58 @@ nav a {
   opacity: 1;
   transform: translateY(0);
 }
-/* styles.css */
 
-/* ... (previous styles) */
-
-/* Mobile Navigation Styles */
-.mobile-nav {
+.mobile-nav, .mobile-nav ul li a, .menu-icon {
   display: none;
 }
 
-.mobile-nav ul {
-  list-style: none;
-  text-align: center;
-}
-
-.mobile-nav ul li {
-  margin: 10px 0;
-}
-
-.mobile-nav ul li a {
-  color: #333;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-/* Show the menu when the toggle button is clicked */
-.mobile-nav.active {
-  display: block;
-  background-color: #333;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-
-.mobile-nav.active ul {
-  padding: 20px;
-  background-color: #333;
-}
-
-.mobile-nav.active li {
-  margin: 10px 0;
-}
-
-.mobile-nav.active li a {
-  color: #fff;
-}
-
-/* Styles for the toggle button */
-.menu-icon {
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* Media query to show/hide mobile navigation */
+/* Responsive and Interaction Styles */
 @media (max-width: 768px) {
-  .menu-icon {
-    display: block;
+  header {
+    padding: 10px 0;
   }
 
   nav ul {
+    flex-direction: column;
     display: none;
   }
 
-  nav.active ul {
+  nav li {
+    margin: 10px 0;
+  }
+
+  .menu-icon {
     display: block;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .mobile-nav.active {
+    display: block;
+    background-color: #333;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 1;
+  }
+
+  .mobile-nav.active ul {
+    padding: 20px;
+    background-color: #333;
+    list-style: none;
+    text-align: center;
+  }
+
+  .mobile-nav.active ul li {
+    margin: 10px 0;
+  }
+
+  .mobile-nav.active ul li a {
+    color: #fff;
+    font-weight: bold;
   }
 }
+
