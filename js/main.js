@@ -59,7 +59,7 @@ var files = (function () {
         }
     };
     Singleton.defaultOptions = {
-        "about.txt": "https://heinrichenslin.co.za/about.html/",
+        "about.txt": "https://Hein123456/Hein123456.github.io/pages/about.html",
         "Github.txt": "https://github.com/Hein123456",
         "Linkedin.txt": "https://www.linkedin.com/in/heinrich-e-53a6a9231/"
     };
@@ -201,19 +201,22 @@ var main = (function () {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
         })();
+        
         for (var file in files.getInstance()) {
             var element = document.createElement("button");
             Terminal.makeElementDisappear(element);
+            
             element.onclick = function (file, event) {
                 this.handleSidenav(event);
                 this.cmdLine.value = "cat " + file + " ";
                 this.handleCmd();
             }.bind(this, file);
+            
             element.appendChild(document.createTextNode(capFirst(file.replace(/\.[^/.]+$/, "").replace(/_/g, " "))));
             this.sidenav.appendChild(element);
             this.sidenavElements.push(element);
         }
-        // Shouldn't use document.getElementById but Terminal is already using loads of params
+        
         document.getElementById("sidenavBtn").addEventListener("click", this.handleSidenav.bind(this));
     };
 
