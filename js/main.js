@@ -59,7 +59,7 @@ var files = (function () {
         }
     };
     Singleton.defaultOptions = {
-        "about.txt": "https://Hein123456/Hein123456.github.io/pages/about.html",
+        "about.txt": "https://heinrichenslin.co.za/pages/about.html",
         "Github.txt": "https://github.com/Hein123456",
         "Linkedin.txt": "https://www.linkedin.com/in/heinrich-e-53a6a9231/"
     };
