@@ -351,7 +351,7 @@ var main = (function () {
         this.type("Welcome to the wordle game! \n"+
         "The rules are simple, you have 6 attempts to guess the word. \n"+ 
         "The word is 5 letters.\n"+
-        "[] Correct letter, correct position.\n() Correct letter, wrong position.\nNo brackets, letter not in word.", this.unlock.bind(this));   
+        "[] Correct letter, correct position.\n() Correct letter, wrong position.\nNo brackets, letter not in word.\nEnter your first guess.", this.unlock.bind(this));   
         wordleactive = true;
         numguesses = 0;
     } catch (error) {console.error(error);
@@ -365,7 +365,7 @@ var main = (function () {
         var result = "";
         var guess = cmdComponents[0].toLowerCase();
         if (guess.length !== 5){
-            this.type("Please a 5 letter word!", this.unlock.bind(this));
+            this.type("Please enter a 5 letter word!", this.unlock.bind(this));
             numguesses--;
             return;}
             else if (numguesses === 6){
