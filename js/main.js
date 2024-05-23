@@ -336,7 +336,7 @@ var main = (function () {
         
         xhr.addEventListener('readystatechange', function () {
             if (this.readyState === this.DONE) {
-                console.log(this.responseText);
+                //console.log(this.responseText);
                 var response = JSON.parse(this.responseText);
                 word = response.word;
             }
@@ -360,10 +360,10 @@ var main = (function () {
     };
     Terminal.prototype.handlewordle = function (cmdComponents) {
         numguesses++;
-        console.log(word);
-        console.log(cmdComponents);
+       // console.log(word);
+        //console.log(cmdComponents);
         var result = "";
-        var guess = cmdComponents[0];
+        var guess = cmdComponents[0].toLowerCase();
         if (guess.length !== 5){
             this.type("Please a 5 letter word!", this.unlock.bind(this));
             numguesses--;
@@ -378,7 +378,7 @@ var main = (function () {
             return;
         }else{
         for (var i = 0; i < 5; i++){
-            console.log(result);
+            //console.log(result);
             if (guess.charAt(i) === word.charAt(i)){
                 result += "["+guess.charAt(i) + "]";
             } else if (word.includes(guess.charAt(i))){
