@@ -18,7 +18,7 @@ var configs = (function () {
         help_help: "Print this menu.",
         clear_help: "Clear the terminal screen.",
         reboot_help: "Reboot the system.",
-        welcome: "<---------- If you have no idea what to do click here to get started.\n\nWelcome to my website! I'm Heinrich Enslin, a full-stack developer and cyber security enthusiast.\n\nType 'help' to get a list of commands you can use.\n\n",
+        welcome: "\n<---------- If you have no idea what to do click here to get started.\n\nWelcome to my website! I'm Heinrich Enslin, a full-stack developer and cyber security enthusiast.\n\nType 'help' to get a list of commands you can use.\n\n",
         internet_explorer_warning: "NOTE: I see you're using internet explorer, this website won't work properly.",
         welcome_file_name: "welcome_message.txt",
         invalid_command_message: "<value>: command not found.",
@@ -37,7 +37,7 @@ var configs = (function () {
         host: "heinrichenslin.co.za",
         user: "guest",
         is_root: false,
-        type_delay: 20
+        type_delay: 5
     };
     return {
         getInstance: function (options) {
@@ -111,12 +111,10 @@ var main = (function () {
     var cmds = {
         LS: { value: "ls", help: configs.getInstance().ls_help },
         CAT: { value: "cat", help: configs.getInstance().cat_help },
-       
-       
         HELP: { value: "help", help: configs.getInstance().help_help },
         CLEAR: { value: "clear", help: configs.getInstance().clear_help },
         REBOOT: { value: "reboot", help: configs.getInstance().reboot_help },
-        
+        WORDLE: { value: "wordle", help: "Play the wordle game." }
         
 
     };
@@ -266,9 +264,6 @@ var main = (function () {
                 if (cmdComponents.length === 1) {
                     cmdComponents[1] = "";
                 }
-                if (configs.getInstance().welcome_file_name.startsWith(cmdComponents[1].toLowerCase())) {
-                    possibilities.push(cmds.CAT.value + " " + configs.getInstance().welcome_file_name);
-                }
                 for (var file in files.getInstance()) {
                     if (file.startsWith(cmdComponents[1].toLowerCase())) {
                         possibilities.push(cmds.CAT.value + " " + file);
@@ -295,34 +290,116 @@ var main = (function () {
             }
         }
     };
-
+    var word ="";
+    var wordleactive = false;
+    var numguesses = 0;
     Terminal.prototype.handleCmd = function () {
-        var cmdComponents = this.cmdLine.value.trim().split(" ");
+        var cmdComponents = this.cmdLine.value.trim().split(" "); 
         this.lock();
-        switch (cmdComponents[0]) {
-            case cmds.CAT.value:
-                this.cat(cmdComponents);
-                break;
-            case cmds.LS.value:
-                this.ls();
-                break;
-            
-            
-            case cmds.HELP.value:
-                this.help();
-                break;
-            case cmds.CLEAR.value:
-                this.clear();
-                break;
-            case cmds.REBOOT.value:
-                this.reboot();
-                break;
-            default:
-                this.invalidCommand(cmdComponents);
-                break;
+        if (wordleactive){
+            this.handlewordle(cmdComponents);
+        }else{
+           
+            switch (cmdComponents[0]) {
+                case cmds.CAT.value:
+                    this.cat(cmdComponents);
+                    break;
+                case cmds.LS.value:
+                    this.ls();
+                    break;
+                case cmds.HELP.value:
+                    this.help();
+                    break;
+                case cmds.CLEAR.value:
+                    this.clear();
+                    break;
+                case cmds.REBOOT.value:
+                    this.reboot();
+                    break;
+                case cmds.WORDLE.value:
+                    this.wordleinit();
+                    break;
+                default:
+                    this.invalidCommand(cmdComponents);
+                    break;
+            }}
         };
+    
+    Terminal.prototype.wordleinit = async function () {
+        try {
+        const data = JSON.stringify({
+            timezone: 'UTC + 0'
+        });
+        
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        
+        xhr.addEventListener('readystatechange', function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+                var response = JSON.parse(this.responseText);
+                word = response.word;
+            }
+        });
+        
+        xhr.open('POST', 'https://wordle-game-api1.p.rapidapi.com/word');
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.setRequestHeader('X-RapidAPI-Key', '2ae4bf79demshb6d59a105e85350p1b5ff5jsnaa821c5cf96c');
+        xhr.setRequestHeader('X-RapidAPI-Host', 'wordle-game-api1.p.rapidapi.com');
+        
+        xhr.send(data);
+        this.type("Welcome to the wordle game! \n"+
+        "The rules are simple, you have 6 attempts to guess the word. \n"+ 
+        "The word is 5 letters.\n"+
+        "[] Correct letter, correct position.\n() Correct letter, wrong position.\nNo brackets, letter not in word.", this.unlock.bind(this));   
+        wordleactive = true;
+        numguesses = 0;
+    } catch (error) {console.error(error);
+        this.type("unable to get the daily wordle"+ this.unlock.bind(this));  
+    }
+    };
+    Terminal.prototype.handlewordle = function (cmdComponents) {
+        numguesses++;
+        console.log(word);
+        console.log(cmdComponents);
+        var result = "";
+        var guess = cmdComponents[0];
+        if (guess.length !== 5){
+            this.type("Please a 5 letter word!", this.unlock.bind(this));
+            numguesses--;
+            return;}
+            else if (numguesses === 6){
+            this.type("You have run out of guesses. The word was: "+word, this.unlock.bind(this));
+            wordleactive = false;
+            return;
+        }else if (guess === word){
+            this.type("Congratulations! You have guessed the word: "+word, this.unlock.bind(this));
+            wordleactive = false;
+            return;
+        }else{
+        for (var i = 0; i < 5; i++){
+            console.log(result);
+            if (guess.charAt(i) === word.charAt(i)){
+                result += "["+guess.charAt(i) + "]";
+            } else if (word.includes(guess.charAt(i))){
+                result += "("+guess.charAt(i) + ")";
+            }else{
+                result += guess.charAt(i);
+            
+            }
+        }
+        var numremaining = 6 - numguesses;
+        this.type(result + "\n rouns remaining = " + numremaining , this.unlock.bind(this));
+    }
     };
 
+   
+
+
+
+
+    
+    
     Terminal.prototype.cat = function (cmdComponents) {
         var result;
         if (cmdComponents.length <= 1) {
@@ -336,7 +413,7 @@ var main = (function () {
     };
 
     Terminal.prototype.ls = function () {
-        var result = ".\n..\n" + configs.getInstance().welcome_file_name + "\n";
+        var result = "";
         for (var file in files.getInstance()) {
             result += file + "\n";
         }
