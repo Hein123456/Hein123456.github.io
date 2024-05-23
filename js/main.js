@@ -389,7 +389,7 @@ var main = (function () {
             }
         }
         var numremaining = 6 - numguesses;
-        this.type(result + "\n rouns remaining = " + numremaining , this.unlock.bind(this));
+        this.type(result + "\n rounds remaining = " + numremaining , this.unlock.bind(this));
     }
     };
 
