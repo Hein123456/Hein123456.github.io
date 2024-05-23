@@ -126,7 +126,7 @@ body {
 
 @media screen and (max-height: 450px) {
     body {
-        font-size: 11pt;
+        font-size: 19pt;
     }
     #sidenav {
        padding-top: 15px;
@@ -143,5 +143,8 @@ body {
 
     #container {
         margin-right: 0;
+    }
+    body {
+        font-size: 0.75rem;
     }
 }
